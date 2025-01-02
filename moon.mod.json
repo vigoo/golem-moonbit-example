@@ -1,0 +1,13 @@
+{
+  "name": "vigoo/golem-moonbit-example",
+  "version": "0.1.0",
+  "deps": {
+    "suiyunonghen/datetime": "0.1.5"
+  },
+  "readme": "README.md",
+  "repository": "",
+  "license": "Apache-2.0",
+  "keywords": [],
+  "description": "",
+  "source": "src"
+}

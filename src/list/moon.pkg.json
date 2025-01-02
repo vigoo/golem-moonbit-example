@@ -1,0 +1,7 @@
+{
+    "import": [
+        "vigoo/golem-moonbit-example/common",
+        "vigoo/golem-moonbit-example/archive",
+        "suiyunonghen/datetime"
+    ]
+}
