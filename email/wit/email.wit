@@ -1,0 +1,11 @@
+package demo:email;
+
+interface api {
+  use golem:rpc/types@0.1.0.{uri};
+
+  send-email: func(list-uri: uri);
+}
+
+world email {
+  export api;
+}

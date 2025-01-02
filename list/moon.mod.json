@@ -1,0 +1,6 @@
+{ 
+    "name": "demo/lst",
+    "deps": {
+        "suiyunonghen/datetime": "0.1.5"
+    }
+}

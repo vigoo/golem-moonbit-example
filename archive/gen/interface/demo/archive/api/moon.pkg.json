@@ -1,0 +1,6 @@
+{ 
+    "import": [
+        { "path" : "demo/archive/ffi", "alias" : "ffi" },
+        { "path" : "demo/archive/src", "alias" : "src" }
+    ] 
+}
