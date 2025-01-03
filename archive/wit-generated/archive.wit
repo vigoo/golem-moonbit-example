@@ -1,0 +1,5 @@
+package demo:archive;
+
+world archive {
+  export demo:archive-interface/api;
+}

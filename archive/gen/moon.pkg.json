@@ -2,10 +2,10 @@
 {
       "link": {
             "wasm": {
-                  "exports": ["cabi_realloc:cabi_realloc", "wasmExportGetAll:demo:archive/api#get-all", "wasmExportGetAllPostReturn:cabi_post_demo:archive/api#get-all", "wasmExportStore:demo:archive/api#store"],
+                  "exports": ["cabi_realloc:cabi_realloc", "wasmExportGetAll:demo:archive-interface/api#get-all", "wasmExportGetAllPostReturn:cabi_post_demo:archive-interface/api#get-all", "wasmExportStore:demo:archive-interface/api#store"],
                   "export-memory-name": "memory",
                   "heap-start-address": 16
             }
       }
-      ,"import": [{ "path" : "demo/archive/ffi", "alias" : "ffi" }, { "path" : "demo/archive/gen/interface/demo/archive/api", "alias" : "api" }]
+      ,"import": [{ "path" : "demo/archive/ffi", "alias" : "ffi" }, { "path" : "demo/archive/gen/interface/demo/archive_interface/api", "alias" : "api" }]
 }
