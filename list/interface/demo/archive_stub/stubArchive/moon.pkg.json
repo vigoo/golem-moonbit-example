@@ -1,0 +1,1 @@
+{ "import": [{ "path" : "demo/lst/ffi", "alias" : "ffi" }, { "path" : "demo/lst/interface/demo/archive_interface/api", "alias" : "api" }, { "path" : "demo/lst/interface/golem/rpc/types", "alias" : "types" }, { "path" : "demo/lst/interface/wasi/io/poll", "alias" : "poll" }] }

@@ -60,10 +60,9 @@ pub fn State::new() -> State {
     connected: Map::new(),
     last_connection_id: ConnectionId(0),
     archived: false,
-    email_deadline: now(),
+    email_deadline: @datetime.DateTime::from_unix_mseconds(0), // Note: can't use now() here because it will run in initialization-time (due to the global `state` variable)
     email_recipients: [],
   }
-  state.update_email_properties()
   state
 }
 
@@ -153,11 +152,27 @@ pub fn poll(
   }
 }
 
+///| Gets an environment variable using WASI 
+fn get_env(key : String) -> String? {
+  @environment.get_environment()
+  .iter()
+  .find_first(fn(pair) {
+    pair.0 == key
+  })
+  .map(fn(pair) {
+    pair.1
+  })
+}
+
 ///| Archives the document
 pub fn archive(self : State) -> Unit {
   self.archived = true
-  // let name = @archive.DocumentName("TODO")
-  // @archive.archive.insert(name, self.document.iter().to_array())
+  let archive_component_id = get_env("ARCHIVE_COMPONENT_ID").or("unknown");
+  let archive = @stubArchive.Api::api({
+    value: "urn:worker:\{archive_component_id}/archive",
+  })
+  let name = get_env("GOLEM_WORKER_NAME").or("unknown");
+  archive.blocking_store(name, self.document.iter().to_array())
 }
 
 ///| Returns true if the document is archived

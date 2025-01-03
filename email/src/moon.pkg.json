@@ -1,4 +1,6 @@
 {
     "import": [
+      "demo/email/interface/demo/lst_stub/stubLst",
+      "demo/email/interface/wasi/clocks/monotonicClock"
     ]
 }

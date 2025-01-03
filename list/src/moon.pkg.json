@@ -1,6 +1,9 @@
 {
     "import": [
         "suiyunonghen/datetime",
-        { "path" : "demo/lst/interface/wasi/clocks/wallClock", "alias" : "wallClock" }
+        { "path" : "demo/lst/interface/wasi/clocks/wallClock", "alias" : "wallClock" },
+        { "path" : "demo/lst/interface/demo/archive_stub/stubArchive", "alias": "stubArchive" },
+        { "path" : "demo/lst/interface/golem/rpc/types", "alias": "rpcTypes" },
+        { "path" : "demo/lst/interface/wasi/cli/environment", "alias": "environment" }
     ]
 }

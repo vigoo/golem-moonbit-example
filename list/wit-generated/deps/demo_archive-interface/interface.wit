@@ -1,0 +1,10 @@
+package demo:archive-interface;
+
+interface api {
+  record archived-list {
+    name: string,
+    items: list<string>,
+  }
+  get-all: func() -> list<archived-list>;
+  store: func(name: string, items: list<string>);
+}

@@ -6,3 +6,11 @@
 components:
   list:
     template: moonbit
+
+dependencies:
+  list:
+  - type: wasm-rpc
+    target: archive
+  - type: wasm-rpc
+    target: email
+

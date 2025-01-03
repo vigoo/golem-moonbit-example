@@ -8,4 +8,6 @@ interface api {
 
 world email {
   export api;
+
+  import wasi:clocks/monotonic-clock@0.2.0;
 }

@@ -1,0 +1,16 @@
+package demo:email-stub;
+
+interface stub-email {
+  use golem:rpc/types@0.1.0.{ uri as golem-rpc-uri };
+  use wasi:io/poll@0.2.0.{ pollable as wasi-io-pollable };
+  use demo:email-interface/api.{ uri };
+  resource api {
+    constructor(location: golem-rpc-uri);
+    blocking-send-email: func(list-uri: uri);
+    send-email: func(list-uri: uri);
+  }
+}
+
+world wasm-rpc-stub-email {
+  export stub-email;
+}

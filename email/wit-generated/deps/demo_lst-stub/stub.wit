@@ -1,0 +1,85 @@
+package demo:lst-stub;
+
+interface stub-lst {
+  use golem:rpc/types@0.1.0.{ uri as golem-rpc-uri };
+  use wasi:io/poll@0.2.0.{ pollable as wasi-io-pollable };
+  use demo:lst-interface/api.{ change, connection, insert-params };
+  resource future-add-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<result<_, string>>;
+  }
+  resource future-connect-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<tuple<connection, list<string>>>;
+  }
+  resource future-connected-editors-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<list<string>>;
+  }
+  resource future-delete-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<result<_, string>>;
+  }
+  resource future-disconnect-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<result<_, string>>;
+  }
+  resource future-get-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<list<string>>;
+  }
+  resource future-insert-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<result<_, string>>;
+  }
+  resource future-is-archived-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<bool>;
+  }
+  resource future-poll-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<result<list<change>, string>>;
+  }
+  resource future-deadline-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<option<u64>>;
+  }
+  resource future-recipients-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<list<string>>;
+  }
+  resource api {
+    constructor(location: golem-rpc-uri);
+    blocking-add: func(c: connection, value: string) -> result<_, string>;
+    add: func(c: connection, value: string) -> future-add-result;
+    blocking-archive: func();
+    archive: func();
+    blocking-connect: func(email: string) -> tuple<connection, list<string>>;
+    connect: func(email: string) -> future-connect-result;
+    blocking-connected-editors: func() -> list<string>;
+    connected-editors: func() -> future-connected-editors-result;
+    blocking-delete: func(c: connection, value: string) -> result<_, string>;
+    delete: func(c: connection, value: string) -> future-delete-result;
+    blocking-disconnect: func(c: connection) -> result<_, string>;
+    disconnect: func(c: connection) -> future-disconnect-result;
+    blocking-get: func() -> list<string>;
+    get: func() -> future-get-result;
+    blocking-insert: func(c: connection, after: string, value: string) -> result<_, string>;
+    insert: func(c: connection, after: string, value: string) -> future-insert-result;
+    blocking-is-archived: func() -> bool;
+    is-archived: func() -> future-is-archived-result;
+    blocking-poll: func(c: connection) -> result<list<change>, string>;
+    poll: func(c: connection) -> future-poll-result;
+  }
+  resource email-query {
+    constructor(location: golem-rpc-uri);
+    blocking-deadline: func() -> option<u64>;
+    deadline: func() -> future-deadline-result;
+    blocking-recipients: func() -> list<string>;
+    recipients: func() -> future-recipients-result;
+  }
+}
+
+world wasm-rpc-stub-lst {
+  export stub-lst;
+}

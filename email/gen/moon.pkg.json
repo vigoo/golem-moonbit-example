@@ -2,10 +2,10 @@
 {
       "link": {
             "wasm": {
-                  "exports": ["cabi_realloc:cabi_realloc", "wasmExportSendEmail:demo:email/api#send-email"],
+                  "exports": ["cabi_realloc:cabi_realloc", "wasmExportSendEmail:demo:email-interface/api#send-email"],
                   "export-memory-name": "memory",
                   "heap-start-address": 16
             }
       }
-      ,"import": [{ "path" : "demo/email/ffi", "alias" : "ffi" }, { "path" : "demo/email/gen/interface/demo/email/api", "alias" : "api" }, { "path" : "demo/email/interface/golem/rpc/types", "alias" : "types" }]
+      ,"import": [{ "path" : "demo/email/ffi", "alias" : "ffi" }, { "path" : "demo/email/gen/interface/demo/email_interface/api", "alias" : "api" }, { "path" : "demo/email/interface/golem/rpc/types", "alias" : "types" }]
 }

@@ -40,5 +40,6 @@ world lst  {
   export api;
   export email-query;
 
-  import wasi:clocks/wall-clock@0.2.0; 
+  import wasi:clocks/wall-clock@0.2.0;
+  import wasi:cli/environment@0.2.0;
 }

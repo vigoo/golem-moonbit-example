@@ -23,7 +23,7 @@ templates:
             - interface
             - world
         - command: moon build --target wasm        
-        - command: wasm-tools component embed wit-generated target/wasm/release/build/gen/gen.wasm -o ../target/release/{{ componentName }}.module.wasm
+        - command: wasm-tools component embed wit-generated target/wasm/release/build/gen/gen.wasm -o ../target/release/{{ componentName }}.module.wasm --encoding utf16
           mkdirs:
             - ../target/release
         - command: wasm-tools component new ../target/release/{{ componentName }}.module.wasm -o ../target/release/{{ componentName }}.wasm
@@ -33,6 +33,7 @@ templates:
         customCommands:
           update-deps:
           - command: wit-deps update
+            dir: ..
           regenerate-stubs:
           - command: ../../wit-bindgen-moonbit/target/debug/wit-bindgen moonbit wit-generated
       debug:
@@ -49,7 +50,7 @@ templates:
             - interface
             - world
         - command: moon build --target wasm -g
-        - command: wasm-tools component embed wit-generated target/wasm/debug/build/gen/gen.wasm -o ../target/debug/{{ componentName }}.module.wasm
+        - command: wasm-tools component embed wit-generated target/wasm/debug/build/gen/gen.wasm -o ../target/debug/{{ componentName }}.module.wasm --encoding utf16
           mkdirs:
             - ../target/debug
         - command: wasm-tools component new ../target/debug/{{ componentName }}.module.wasm -o ../target/debug/{{ componentName }}.wasm
@@ -59,6 +60,7 @@ templates:
         customCommands:
           update-deps:
           - command: wit-deps update
+            dir: ..
           regenerate-stubs:
           - command: ../../wit-bindgen-moonbit/target/debug/wit-bindgen moonbit wit-generated
     defaultProfile: release

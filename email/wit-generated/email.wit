@@ -1,0 +1,9 @@
+package demo:email;
+
+world email {
+  import golem:rpc/types@0.1.0;
+  import wasi:clocks/monotonic-clock@0.2.0;
+  import wasi:io/poll@0.2.0;
+  export demo:email-interface/api;
+  import demo:lst-stub/stub-lst;
+}

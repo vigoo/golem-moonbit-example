@@ -1,0 +1,1 @@
+{ "import": [{ "path" : "demo/lst/ffi", "alias" : "ffi" }, { "path" : "demo/lst/interface/wasi/io/poll", "alias" : "poll" }] }
