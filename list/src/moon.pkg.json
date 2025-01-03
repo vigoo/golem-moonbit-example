@@ -1,5 +1,6 @@
 {
     "import": [
-        "suiyunonghen/datetime"
+        "suiyunonghen/datetime",
+        { "path" : "demo/lst/interface/wasi/clocks/wallClock", "alias" : "wallClock" }
     ]
 }

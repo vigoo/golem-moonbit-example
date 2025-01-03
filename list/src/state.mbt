@@ -60,7 +60,7 @@ pub fn State::new() -> State {
     connected: Map::new(),
     last_connection_id: ConnectionId(0),
     archived: false,
-    email_deadline: @datetime.DateTime::from_unix_mseconds(0), // TODO
+    email_deadline: now(),
     email_recipients: [],
   }
   state.update_email_properties()
@@ -182,9 +182,19 @@ fn ensure_is_connected(
 
 }
 
+///| Queries the WASI wall clock and returns it as a @datetime.DateTime
+/// 
+/// Note that DateTime has only second precision so we ignore the nanoseconds field
+fn now() -> @datetime.DateTime {
+  let wasi_now = @wallClock.now()
+  @datetime.DateTime::from_unix_mseconds(
+    wasi_now.seconds.reinterpret_as_int64(),
+  )
+}
+
 ///| Updates the `email_deadline` and `email_recipients` fields after an update.
 fn update_email_properties(self : State) -> Unit {
-  let now = @datetime.DateTime::from_unix_mseconds(0) // TODO
+  let now = now()
   let send_at = now.inc_hour(12)
   let email_list = self.connected_editors()
   self.email_deadline = send_at

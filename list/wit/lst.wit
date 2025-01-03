@@ -39,4 +39,6 @@ interface email-query {
 world lst  {
   export api;
   export email-query;
+
+  import wasi:clocks/wall-clock@0.2.0; 
 }
