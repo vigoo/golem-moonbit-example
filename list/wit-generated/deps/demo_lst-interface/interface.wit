@@ -1,0 +1,31 @@
+package demo:lst-interface;
+
+interface api {
+  variant change {
+    added(string),
+    deleted(string),
+    inserted(insert-params),
+  }
+  record connection {
+    id: u64,
+  }
+  record insert-params {
+    after: string,
+    value: string,
+  }
+  add: func(c: connection, value: string) -> result<_, string>;
+  archive: func();
+  connect: func(email: string) -> tuple<connection, list<string>>;
+  connected-editors: func() -> list<string>;
+  delete: func(c: connection, value: string) -> result<_, string>;
+  disconnect: func(c: connection) -> result<_, string>;
+  get: func() -> list<string>;
+  insert: func(c: connection, after: string, value: string) -> result<_, string>;
+  is-archived: func() -> bool;
+  poll: func(c: connection) -> result<list<change>, string>;
+}
+
+interface email-query {
+  deadline: func() -> option<u64>;
+  recipients: func() -> list<string>;
+}

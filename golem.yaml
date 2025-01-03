@@ -4,7 +4,8 @@
 # yaml-language-server: $schema=https://schema.golem.cloud/app/golem/1.1.0/golem.schema.json
 
 tempDir: target/golem-temp
-
+witDeps:
+ - common-wit/deps
 templates:
   moonbit:
     profiles:
@@ -19,12 +20,12 @@ templates:
             - wit-generated
           targets:
             - ffi
-            - gen
             - interface
             - world
-        - command: moon build --target wasm
-        - command: mkdir -pv ../target/release
+        - command: moon build --target wasm        
         - command: wasm-tools component embed wit-generated target/wasm/release/build/gen/gen.wasm -o ../target/release/{{ componentName }}.module.wasm
+          mkdirs:
+            - ../target/release
         - command: wasm-tools component new ../target/release/{{ componentName }}.module.wasm -o ../target/release/{{ componentName }}.wasm
         clean:
         - target
@@ -48,8 +49,9 @@ templates:
             - interface
             - world
         - command: moon build --target wasm -g
-        - command: mkdir -pv ../target/debug
         - command: wasm-tools component embed wit-generated target/wasm/debug/build/gen/gen.wasm -o ../target/debug/{{ componentName }}.module.wasm
+          mkdirs:
+            - ../target/debug
         - command: wasm-tools component new ../target/debug/{{ componentName }}.module.wasm -o ../target/debug/{{ componentName }}.wasm
         clean:
         - target
