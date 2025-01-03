@@ -1,5 +1,7 @@
 # golem-moonbit-example
 
+[BLOG POST](https://blog.vigoo.dev/posts/moonbit-with-golem/)
+
 Tested with Golem 1.1
 
 Required tools:
