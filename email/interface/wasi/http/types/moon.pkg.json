@@ -1,0 +1,1 @@
+{ "import": [{ "path" : "demo/email/ffi", "alias" : "ffi" }, { "path" : "demo/email/interface/wasi/io/error", "alias" : "error" }, { "path" : "demo/email/interface/wasi/io/poll", "alias" : "poll" }, { "path" : "demo/email/interface/wasi/io/streams", "alias" : "streams" }] }

@@ -1,5 +1,6 @@
 package demo:archive;
 
 world archive {
+  import wasi:logging/logging;
   export demo:archive-interface/api;
 }

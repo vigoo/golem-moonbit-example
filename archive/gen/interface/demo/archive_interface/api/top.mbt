@@ -2,5 +2,5 @@
 
 pub(all) struct ArchivedList {
       name : String; items : Array[String]
-} derive()
+} derive(Show)
 

@@ -1,6 +1,20 @@
 {
     "import": [
       "demo/email/interface/demo/lst_stub/stubLst",
-      "demo/email/interface/wasi/clocks/monotonicClock"
+      "demo/email/interface/wasi/clocks/monotonicClock",
+      "demo/email/interface/wasi/clocks/wallClock",
+      {
+        "path": "demo/email/interface/golem/rpc/types",
+        "alias": "rpcTypes"
+      },
+      "demo/email/interface/wasi/io/poll",
+      "demo/email/interface/wasi/io/streams",
+      "demo/email/interface/wasi/cli/environment",
+      "demo/email/interface/wasi/http/outgoingHandler",
+      {
+        "path": "demo/email/interface/wasi/http/types",
+        "alias": "httpTypes"
+      },
+      "demo/email/interface/wasi/logging/logging"
     ]
 }

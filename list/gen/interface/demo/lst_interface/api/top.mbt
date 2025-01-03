@@ -2,15 +2,15 @@
 
 pub(all) struct Connection {
       id : UInt64
-} derive()
+} derive(Show)
 
 pub(all) struct InsertParams {
       after : String; value : String
-} derive()
+} derive(Show)
 
 pub(all) enum Change {
       Added(String)
       Deleted(String)
       Inserted(InsertParams)
-} derive()
+} derive(Show)
 

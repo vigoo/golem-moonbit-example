@@ -1,1 +1,6 @@
-{ "import": [{ "path" : "demo/email/interface/golem/rpc/types", "alias" : "types" }] }
+{ 
+    "import": [
+        { "path" : "demo/email/interface/golem/rpc/types", "alias" : "types" },
+        "demo/email/src"
+    ]
+ }

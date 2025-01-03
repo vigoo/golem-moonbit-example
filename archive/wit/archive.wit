@@ -12,4 +12,6 @@ interface api {
 
 world archive {
   export api;
+
+  import wasi:logging/logging;
 }

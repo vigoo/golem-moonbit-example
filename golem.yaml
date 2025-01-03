@@ -15,7 +15,7 @@ templates:
         componentWasm: ../target/release/{{ componentName }}.wasm
         linkedWasm: ../target/release/{{ componentName }}-linked.wasm
         build:
-        - command: ../../wit-bindgen-moonbit/target/debug/wit-bindgen moonbit wit-generated --ignore-stub
+        - command: ../../wit-bindgen-moonbit/target/debug/wit-bindgen moonbit wit-generated --ignore-stub --derive-error --derive-show
           sources: 
             - wit-generated
           targets:
@@ -42,7 +42,7 @@ templates:
         componentWasm: ../target/debug/{{ componentName }}.wasm
         linkedWasm: ../target/debug/{{ componentName }}-linked.wasm
         build:
-        - command: ../../wit-bindgen-moonbit/target/debug/wit-bindgen moonbit wit-generated --ignore-stub
+        - command: ../../wit-bindgen-moonbit/target/debug/wit-bindgen moonbit wit-generated --ignore-stub --derive-error --derive-show
           sources: 
             - wit-generated
           targets:

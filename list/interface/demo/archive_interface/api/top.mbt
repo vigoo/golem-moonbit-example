@@ -2,7 +2,7 @@
 
 pub(all) struct ArchivedList {
       name : String; items : Array[String]
-} derive()
+} derive(Show)
 
 pub fn get_all() -> Array[ArchivedList] {
 

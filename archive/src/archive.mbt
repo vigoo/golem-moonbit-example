@@ -27,6 +27,8 @@ pub fn insert(
   items : Array[String]
 ) -> Unit {
   self.documents.set(name, { name, items })
+
+  @logging.log(@logging.Level::DEBUG, "", "Stored document \{name}")
 }
 
 ///| Iterates all the archived documents

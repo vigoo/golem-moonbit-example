@@ -7,6 +7,7 @@ world lst {
   import wasi:cli/environment@0.2.0;
   import wasi:clocks/wall-clock@0.2.0;
   import wasi:io/poll@0.2.0;
+  import wasi:logging/logging;
   export demo:lst-interface/api;
   export demo:lst-interface/email-query;
   import demo:email-stub/stub-email;

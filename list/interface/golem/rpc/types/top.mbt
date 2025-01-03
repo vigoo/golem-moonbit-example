@@ -2,7 +2,7 @@
 
 pub(all) struct Uri {
       value : String
-} derive()
+} derive(Show)
 
 pub(all) enum WitNode {
       RecordValue(Array[Int])
@@ -27,20 +27,20 @@ pub(all) enum WitNode {
       PrimBool(Bool)
       PrimString(String)
       Handle((Uri, UInt64))
-} derive()
+} derive(Show)
 
 pub(all) struct WitValue {
       nodes : Array[WitNode]
-} derive()
+} derive(Show)
 
-pub(all) enum RpcError {
+pub(all) type! RpcError {
       ProtocolError(String)
       Denied(String)
       NotFound(String)
       RemoteInternalError(String)
-} derive()
+} derive(Show)
 
-pub(all) type WasmRpc Int derive()
+pub(all) type WasmRpc Int derive(Show)
 
 /// Drops a resource handle.
 pub fn WasmRpc::drop(self : WasmRpc) -> Unit {
@@ -48,7 +48,7 @@ pub fn WasmRpc::drop(self : WasmRpc) -> Unit {
       wasmImportResourceDropWasmRpc(resource)
 }
 
-pub(all) type FutureInvokeResult Int derive()
+pub(all) type FutureInvokeResult Int derive(Show)
 
 /// Drops a resource handle.
 pub fn FutureInvokeResult::drop(self : FutureInvokeResult) -> Unit {

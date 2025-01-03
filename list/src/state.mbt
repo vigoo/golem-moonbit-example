@@ -51,6 +51,7 @@ pub struct State {
   mut archived : Bool
   mut email_deadline : @datetime.DateTime
   mut email_recipients : Array[EmailAddress]
+  mut email_worker_started: Bool
 }
 
 ///| Creates a new empty document editing state
@@ -62,6 +63,7 @@ pub fn State::new() -> State {
     archived: false,
     email_deadline: @datetime.DateTime::from_unix_mseconds(0), // Note: can't use now() here because it will run in initialization-time (due to the global `state` variable)
     email_recipients: [],
+    email_worker_started: false
   }
   state
 }
@@ -74,6 +76,7 @@ pub fn connect(
   let connection_id = self.last_connection_id.next()
   self.last_connection_id = connection_id
   self.connected.set(connection_id, EditorState::new(email))
+  self.update_email_properties()
   (connection_id, self.document.get())
 }
 
@@ -84,6 +87,7 @@ pub fn disconnect(
 ) -> Unit!EditorError {
   if self.connected.contains(connection_id) {
     self.connected.remove(connection_id)
+    self.update_email_properties()
   } else {
     raise InvalidConnection(connection_id)
   }
@@ -156,22 +160,18 @@ pub fn poll(
 fn get_env(key : String) -> String? {
   @environment.get_environment()
   .iter()
-  .find_first(fn(pair) {
-    pair.0 == key
-  })
-  .map(fn(pair) {
-    pair.1
-  })
+  .find_first(fn(pair) { pair.0 == key })
+  .map(fn(pair) { pair.1 })
 }
 
 ///| Archives the document
 pub fn archive(self : State) -> Unit {
   self.archived = true
-  let archive_component_id = get_env("ARCHIVE_COMPONENT_ID").or("unknown");
+  let archive_component_id = get_env("ARCHIVE_COMPONENT_ID").or("unknown")
   let archive = @stubArchive.Api::api({
     value: "urn:worker:\{archive_component_id}/archive",
   })
-  let name = get_env("GOLEM_WORKER_NAME").or("unknown");
+  let name = get_env("GOLEM_WORKER_NAME").or("unknown")
   archive.blocking_store(name, self.document.iter().to_array())
 }
 
@@ -199,12 +199,12 @@ fn ensure_is_connected(
 
 ///| Queries the WASI wall clock and returns it as a @datetime.DateTime
 /// 
-/// Note that DateTime has only second precision so we ignore the nanoseconds field
+/// Note that DateTime has only millisecond precision
 fn now() -> @datetime.DateTime {
   let wasi_now = @wallClock.now()
-  @datetime.DateTime::from_unix_mseconds(
-    wasi_now.seconds.reinterpret_as_int64(),
-  )
+  let base_ms = wasi_now.seconds.reinterpret_as_int64() * 1000
+  let nano_ms = (wasi_now.nanoseconds.reinterpret_as_int() / 1000000).to_int64()
+  @datetime.DateTime::from_unix_mseconds(base_ms + nano_ms)
 }
 
 ///| Updates the `email_deadline` and `email_recipients` fields after an update.
@@ -214,6 +214,15 @@ fn update_email_properties(self : State) -> Unit {
   let email_list = self.connected_editors()
   self.email_deadline = send_at
   self.email_recipients = email_list
+
+  if not(self.email_worker_started) {
+    let email_component_id = get_env("EMAIL_COMPONENT_ID").or("unknown");
+    let name = get_env("GOLEM_WORKER_NAME").or("unknown")
+    let self_component_id = get_env("GOLEM_COMPONENT_ID").or("unknown")
+    let api = @stubEmail.Api::api({ value: "urn:worker:\{email_component_id}:\{name}"})
+    api.send_email({ value: "urn:worker:\{self_component_id}:\{name}"})
+    self.email_worker_started  = true;
+  }
 }
 
 ///| Adds a change event to each connected editor's state
