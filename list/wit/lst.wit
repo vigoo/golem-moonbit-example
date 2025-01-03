@@ -16,15 +16,15 @@ interface api {
     inserted(insert-params)
   }
 
-  add: func(c: connection, value: string);
-  delete: func(c: connection, value: string);
-  insert: func(c: connection, after: string, value: string);
+  add: func(c: connection, value: string) -> result<_, string>;
+  delete: func(c: connection, value: string) -> result<_, string>;
+  insert: func(c: connection, after: string, value: string) -> result<_, string>;
   get: func() -> list<string>;
 
-  poll: func(c: connection) -> list<change>;
+  poll: func(c: connection) -> result<list<change>, string>;
 
   connect: func(email: string) -> tuple<connection, list<string>>;
-  disconnect: func(c: connection);
+  disconnect: func(c: connection) -> result<_, string>;
   connected-editors: func() -> list<string>;
 
   archive: func();

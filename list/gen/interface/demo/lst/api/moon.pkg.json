@@ -1,1 +1,5 @@
-{ }
+{ 
+    "import": [
+        { "path" : "demo/lst/src", "alias" : "src" }
+    ]
+}

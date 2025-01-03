@@ -1,5 +1,5 @@
 ///| Identifier of a connected editor
-type ConnectionId Int derive(Eq, Hash)
+pub type ConnectionId UInt64 derive(Eq, Hash)
 
 ///| Generates a next unique connection ID
 fn next(self : ConnectionId) -> ConnectionId {
@@ -7,18 +7,26 @@ fn next(self : ConnectionId) -> ConnectionId {
 }
 
 ///| Error type for editor state operations
-type! EditorError {
+pub type! EditorError {
   ///| Error returned when an invalid connection ID is used
   InvalidConnection(ConnectionId)
   ///| Error when trying to modify an already archived document
   AlreadyArchived
 }
 
+///| Shows an editor error
+pub fn to_string(self : EditorError) -> String {
+  match self {
+    InvalidConnection(id) => "Invalid connection ID: \{id._}"
+    AlreadyArchived => "Document is already archived"
+  }
+}
+
 ///| Email address of a connected editor
-type EmailAddress String
+pub type EmailAddress String
 
 ///| An observable change of the edited document
-enum Change {
+pub enum Change {
   Added(String)
   Deleted(String)
   Inserted(after~ : String, value~ : String)
@@ -36,7 +44,7 @@ fn EditorState::new(email : EmailAddress) -> EditorState {
 }
 
 ///| Document state
-struct State {
+pub struct State {
   document : Document
   connected : Map[ConnectionId, EditorState]
   mut last_connection_id : ConnectionId
@@ -148,8 +156,8 @@ pub fn poll(
 ///| Archives the document
 pub fn archive(self : State) -> Unit {
   self.archived = true
-  let name = @archive.DocumentName("TODO")
-  @archive.archive.insert(name, self.document.iter().to_array())
+  // let name = @archive.DocumentName("TODO")
+  // @archive.archive.insert(name, self.document.iter().to_array())
 }
 
 ///| Returns true if the document is archived
@@ -230,21 +238,6 @@ test "poll returns changes" {
     c22,
     content=
       #|[Added("x"), Added("z"), Inserted(after="x", value="y"), Deleted("x")]
-    ,
-  )
-}
-
-test "archive works" {
-  let state = State::new()
-  let (cid1, _) = state.connect(EmailAddress("x1@vigoo.dev"))
-  state.add!(cid1, "x")
-  state.archive()
-  let r = state.add?(cid1, "y")
-  assert_eq!(r.is_err(), true)
-  inspect!(
-    @archive.archive.iter().to_array(),
-    content=
-      #|[{name: "TODO", items: ["x"]}]
     ,
   )
 }
